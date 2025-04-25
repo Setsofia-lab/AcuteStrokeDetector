@@ -4,11 +4,11 @@ FROM arm64v8/python:3.9-slim
 # Set working directory
 WORKDIR /app
 
-# Avoid interactive prompts
+# Set environment variables to work around hash issues
 ENV DEBIAN_FRONTEND=noninteractive
+ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update --option Acquire::Retries=5 && apt-get install -y --no-install-recommends \
     build-essential \
     libgl1-mesa-glx \
     libglib2.0-0 \
