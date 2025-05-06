@@ -8,7 +8,7 @@ import os
 from model import VAE, IMG_CHANNELS, IMG_HEIGHT, IMG_WIDTH # Removed LATENT_DIM import
 
 # --- Configuration ---
-MODEL_PATH = './best_vae_stroke_model.pth' # Path to the saved dictionary
+MODEL_PATH = './best_vae_stroke_model (1).pth' # Path to the saved dictionary
 
 # --- Device Configuration ---
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
