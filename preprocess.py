@@ -8,7 +8,7 @@ import torchvision.transforms as transforms # Using torchvision transforms
 import torch.nn.functional as F # Import F for clamp
 
 # Define directories for data
-DATA_DIR = './data'
+DATA_DIR = './data/input'
 STROKE_DIR = os.path.join(DATA_DIR, 'stroke_data')
 NON_STROKE_DIR = os.path.join(DATA_DIR, 'noStroke_data')
 
