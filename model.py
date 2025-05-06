@@ -1,12 +1,3 @@
-# The VAE Aarcitecture contains the encoder , map input to a gaussian distribution, by out puting th mean and varian of that input image to the gaussian
-# the latent space which is a distribution of the data where similar ones cluster around same sections to allow to learn key features in the space
-# decoder take the data poitnf orm the distributiona nd reconstruct it to the original image
-
-# Construct a VAE class to inherit the base of nn.Model from pytochs package
-# the self.encoder -takes the input image , it has the nn.Sequntial, nn.Conv2d - in, out, kernel, strid, padding, nn.RELU, nn.Flatten and output the flatten vector which will be input to the latten space as a dat poit in the latent distribution
-# the latent layers - takes the flatten vector form the encoder and output mean vector and log variance for the latent dimension space
-# decoder - take the latent vector and map to the  
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -17,7 +8,7 @@ IMG_HEIGHT = 64
 IMG_WIDTH = 64
 
 # Latent space dimension 
-LATENT_DIM = 128
+LATENT_DIM = 256
 
 class VAE(nn.Module):
     def __init__(self, img_channels, img_height, img_width, latent_dim):
@@ -33,12 +24,17 @@ class VAE(nn.Module):
             # Input: [batchsize, channel, height of input, width of input]. Example for 64x64 input is  [batch_size, 1, 64, 64]
             # Through out the encoder the channels will increase but the image dimensions reduces into a compressed form
             nn.Conv2d(img_channels, 32, kernel_size=4, stride=2, padding=1), # Output: [batch_size, 32, 32, 32]
+            nn.BatchNorm2d(32),
             nn.ReLU(), 
+            # nn.BatchNorm()
             nn.Conv2d(32, 64, kernel_size=4, stride=2, padding=1),
+            nn.BatchNorm2d(64),
             nn.ReLU(),
             nn.Conv2d(64, 128, kernel_size=4, stride=2, padding=1), 
+            nn.BatchNorm2d(128),
             nn.ReLU(),
             nn.Conv2d(128, 256, kernel_size=4, stride=2, padding=1), 
+            nn.BatchNorm2d(256),
             nn.ReLU(),
             # The final output from the encoder is a 4x4 feature maps with 256 channels.This vecor will now be flatten to a 1d array.  batch_size, 256 * 4 * 4 = [batch_size, 4096]
             nn.Flatten() 
@@ -57,10 +53,13 @@ class VAE(nn.Module):
         self.decoder = nn.Sequential(
             # Input is reshaped from [batch_size, 4096] to [batch_size, 256, 4, 4]
             nn.ConvTranspose2d(256, 128, kernel_size=4, stride=2, padding=1), 
+            nn.BatchNorm2d(128),
             nn.ReLU(),
-            nn.ConvTranspose2d(128, 64, kernel_size=4, stride=2, padding=1), 
+            nn.ConvTranspose2d(128, 64, kernel_size=4, stride=2, padding=1),
+            nn.BatchNorm2d(64),
             nn.ReLU(),
             nn.ConvTranspose2d(64, 32, kernel_size=4, stride=2, padding=1),
+            nn.BatchNorm2d(32),
             nn.ReLU(),
             # ConvTranspose layer 4: Output image channels (1 for grayscale)The final layer uses Sigmoid to output pixel values between 0 and 1.
             nn.ConvTranspose2d(32, img_channels, kernel_size=4, stride=2, padding=1), 
@@ -127,8 +126,3 @@ class VAE(nn.Module):
         # Return the reconstructed image, the mean vector, and the log-variance vector. The mean and log-variance are needed to calculate the KL divergence loss.
         return reconstructed_x, mu, logvar
 
-# --- Instantiate the VAE Model (Example) ---
-# You would do this in your main training script (e.g., train.py)
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# model = VAE(IMG_CHANNELS, IMG_HEIGHT, IMG_WIDTH, LATENT_DIM).to(device)
-# print(model)
