@@ -119,6 +119,3 @@ The project development was broken down into the following key stages:
 * Evaluation metrics provide insight into the model's ability to distinguish stroke vs. non-stroke based on reconstruction error, which serves as an anomaly detection signal.
 * **Future Work:** A key next step is to systematically explore the learned latent space of the *aligned* faces to identify specific dimensions or combinations of dimensions that correlate with facial drooping or asymmetry. This could involve techniques like traversing individual latent dimensions or performing latent space arithmetic (e.g., `mean_stroke_faces - mean_non_stroke_faces`) to find a "stroke asymmetry" vector. Manipulating faces along such a vector could allow controlled generation of images mimicking stroke symptoms.
 
----
-
-This README provides a comprehensive overview of your project. You can save this content as `README.md` in your project's root directory.
