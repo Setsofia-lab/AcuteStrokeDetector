@@ -2,7 +2,7 @@
 
 ## Project Goal
 
-The primary goal of this project is to build and train a Variational Autoencoder (VAE) to learn a compressed representation of human faces. Leveraging the VAE's ability to create a smooth latent space, we aim to explore this space to potentially identify dimensions controlling facial symmetry. The ultimate objective is to generate images that mimic facial drooping, a common symptom of acute stroke, which could aid in early diagnosis and understanding.
+The primary goal of this project is to build and train a Variational Autoencoder (VAE) to learn a compressed representation of human faces. Leveraging the VAE's ability to create a smooth latent space, I aim to explore this space to potentially identify dimensions controlling facial symmetry. The ultimate objective is to generate images that mimic facial drooping, a common symptom of acute stroke, which could aid in early diagnosis and understanding.
 
 ## Dataset
 
